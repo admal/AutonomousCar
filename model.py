@@ -7,6 +7,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
 import matplotlib.image as mpimg
 
+tf.logging.set_verbosity(tf.logging.DEBUG)
+
 Dataset = collections.namedtuple('Dataset', ['data', 'target'])
 Datasets = collections.namedtuple('Datasets', ['train', 'validation', 'test'])
 def load_csv_without_header(filename,
@@ -40,8 +42,8 @@ class Model:
     def __init__(self, trainingpath):
         self._training_data = load_csv_without_header(
             filename=trainingpath,
-            target_dtype=np.float32,
-            features_dtype=np.float32,
+            target_dtype=np.float16,
+            features_dtype=np.float16,
             target_column=3
         )
 
@@ -54,10 +56,10 @@ class Model:
         # center_images = features["x"][2]
         # input_layer = tf.reshape(features, [-1, self.image_width, self.image_height, self.color_channels])
         # input_layer = tf.reshape(features["x"], [-1, 160, 320, self.color_channels])
-        input_layer = tf.reshape(features["x"], [-1, self.image_width, self.image_height, self.color_channels])
+        # input_layer = tf.reshape(features["x"], [-1, self.image_width, self.image_height, self.color_channels])
         #normalize data
         conv1 = tf.layers.conv2d(
-            inputs=input_layer,
+            inputs=features["x"],
             filters=24,
             kernel_size=[5,5],
             padding="same",
@@ -126,7 +128,7 @@ class Model:
         # Calculate root mean squared error as additional eval metric
         eval_metric_ops = {
             "rmse": tf.metrics.root_mean_squared_error(
-                tf.cast(labels, tf.float32), predictions)
+                tf.cast(labels, tf.float16), predictions)
         }
 
         optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
@@ -145,6 +147,7 @@ class Model:
         if self.isTrained == 0:
             self._model = tf.estimator.Estimator(model_fn=self.build_model)
             images = []
+
             for center_image in self._training_data.data:
                 image = np.asarray(load_image(center_image))
                 normalized_image = image/127.5 - 1.0
@@ -152,10 +155,10 @@ class Model:
                 images.append(normalized_image)
 
             train_input_fn = tf.estimator.inputs.numpy_input_fn(
-                x={"x": np.asarray(images ,dtype=np.float32)},
-                y=np.array(self._training_data.target,dtype=np.float32),
+                x={"x": np.asarray(images ,dtype=np.float16)},
+                y=np.asarray(self._training_data.target,dtype=np.float16),
                 num_epochs=None,
-                shuffle=True)
+                shuffle=False)
             print("Start training")
             self._model.train(input_fn= train_input_fn, steps=10)
             print("Finised training")
@@ -168,10 +171,11 @@ class Model:
                 image = np.asarray(load_image(center_image))
                 normalized_image = image/127.5 - 1.0
 
-                images.append(normalized_image)
+                images.append(normalized_image.flatten())
+
             train_input_fn = tf.estimator.inputs.numpy_input_fn(
-                x={"x": np.asarray(images ,dtype=np.float32)},
-                y=np.array(self._training_data.target,dtype=np.float32),
+                x={"x": np.asarray(images ,dtype=np.float16)},
+                y=np.array(self._training_data.target,dtype=np.float16),
                 num_epochs=None,
                 shuffle=True)
             results = self._model.evaluate(input_fn=train_input_fn)
