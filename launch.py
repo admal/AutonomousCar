@@ -32,6 +32,7 @@ sio = socketio.Server()
 app = Flask(__name__)
 # init our model and image array as empty
 model = PredictModel("C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model")
+model.load()
 prev_image_array = None
 
 MAX_SPEED, MIN_SPEED = 25, 10
@@ -94,7 +95,7 @@ def telemetry(sid, data):
 
             # predict the steering angle for the image
             # steering_angle = float(model.predict(image, batch_size=1))
-            if model is None:
+            if model is not None:
                 result = model.predict(image)
                 steering_angle = result[0]
 
