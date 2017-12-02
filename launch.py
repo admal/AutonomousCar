@@ -23,11 +23,7 @@ from flask import Flask
 # input output
 from io import BytesIO
 
-import scipy
-import pandas as pd
-
-from sklearn.model_selection import train_test_split
-
+from model.PredictModel import PredictModel
 from utils import *
 
 # initialize our server
@@ -35,7 +31,7 @@ sio = socketio.Server()
 # our flask (web) app
 app = Flask(__name__)
 # init our model and image array as empty
-model = None
+model = PredictModel("C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model")
 prev_image_array = None
 
 MAX_SPEED, MIN_SPEED = 25, 10
@@ -99,7 +95,8 @@ def telemetry(sid, data):
             # predict the steering angle for the image
             # steering_angle = float(model.predict(image, batch_size=1))
             if model is None:
-                steering_angle = -0.05
+                result = model.predict(image)
+                steering_angle = result[0]
 
             # lower the throttle as the speed increases
             # if the speed is above the current speed limit, we are on a downhill.
