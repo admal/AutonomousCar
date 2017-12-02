@@ -1,3 +1,4 @@
+from log import log_info
 from model.Model import Model
 import tensorflow as tf
 import numpy as np
@@ -19,6 +20,6 @@ class PredictModel(Model):
         predictions = self._model.predict(input_fn=input_fn)
         result = []
         for i, p in enumerate(predictions):
-            print("Prediction %s: %s" % (i + 1, p["rotations"]))
+            log_info("Prediction %s: %s" % (i + 1, p["rotations"]))
             result.append(p["rotations"])
         return result

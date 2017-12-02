@@ -3,11 +3,11 @@ import os
 
 from log import log_info
 
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 import tensorflow as tf
 from utils import *
 
-tf.logging.set_verbosity(tf.logging.DEBUG)
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 
 class Model:
@@ -18,8 +18,9 @@ class Model:
     image_height = IMAGE_HEIGHT
     color_channels = IMAGE_CHANNELS
     model_dir = "C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model"
+    is_verbose = False
 
-    def __init__(self, model_dir = None):
+    def __init__(self, model_dir = None, is_verbose = False):
         """
         Initializes model
         :param model_dir: directory with model, it can be trained and used to predict rotation
@@ -30,8 +31,10 @@ class Model:
         else:
             self.model_dir = model_dir
 
+        self.is_verbose = is_verbose
+
     def build_model(self, features, labels, mode):
-        print("start building model")
+        log_info("start building model")
 
         conv1 = tf.layers.conv2d(
             inputs=features["x"],

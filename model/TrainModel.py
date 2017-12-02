@@ -29,5 +29,5 @@ class TrainModel(Model):
             log_info("Start evaluating")
             results = self._model.evaluate(input_fn=train_input_fn)
             self._model.export_savedmodel()
-            print("Loss %s" % results["loss"])
-            print("Root Mean Squared Error: %s" % results["rmse"])
+            log_info("Loss %s" % results["loss"])
+            log_info("Root Mean Squared Error: %s" % results["rmse"])
