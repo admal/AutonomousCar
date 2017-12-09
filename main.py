@@ -22,7 +22,9 @@ def main():
     # tmpy = y_train[28]
     # tmp_res = model.predict([x[28]])
     model.train(x, y_train)
+    log_info("TRAINED --> START EVAULATION")
     model.evaluate(x_v, y_val)
+    log_info("FINISH")
 
     # log_info("Supposed: {}; Obtained: {}".format(tmpy, tmp_res[0]))
 
