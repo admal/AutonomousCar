@@ -18,9 +18,8 @@ class Model:
     image_height = IMAGE_HEIGHT
     color_channels = IMAGE_CHANNELS
     model_dir = "C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model"
-    is_verbose = False
 
-    def __init__(self, model_dir = None, is_verbose = False):
+    def __init__(self, model_dir = None):
         """
         Initializes model
         :param model_dir: directory with model, it can be trained and used to predict rotation
@@ -31,7 +30,6 @@ class Model:
         else:
             self.model_dir = model_dir
 
-        self.is_verbose = is_verbose
 
     def build_model(self, features, labels, mode):
         log_info("start building model")
