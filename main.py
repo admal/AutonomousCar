@@ -7,12 +7,6 @@ import logging
 logging.basicConfig(filename='training.log',level=logging.DEBUG)
 
 def main():
-
-    logging.info("TEST")
-    log_info("TEST log_info")
-    log_error("Test log_error")
-    return
-
     (x_train, y_train), (x_val, y_val) = load_csv_data(
         "/home/auser/TrainingData", 0.1)
 
