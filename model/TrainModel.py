@@ -15,7 +15,7 @@ class TrainModel(Model):
             shuffle=False
         )
         log_info("Start training")
-        self._model.train(train_input_fn, steps=1)
+        self._model.train(train_input_fn, steps=5)
         self.isTrained = True
         log_info("End training")
 
