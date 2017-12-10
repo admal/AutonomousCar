@@ -24,10 +24,9 @@ class TrainModel(Model):
             train_input_fn = tf.estimator.inputs.numpy_input_fn(
                 x={"x": np.asarray(x_val, dtype=np.float16)},
                 y=np.array(y_val, dtype=np.float16),
-                num_epochs=None,
+                num_epochs=10,
                 shuffle=False)
             log_info("Start evaluating")
             results = self._model.evaluate(input_fn=train_input_fn)
-            self._model.export_savedmodel()
             log_info("Loss %s" % results["loss"])
             log_info("Root Mean Squared Error: %s" % results["rmse"])
