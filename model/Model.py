@@ -57,7 +57,6 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
-        log_info("conv3")
         conv4 = tf.layers.conv2d(
             inputs=conv3,
             filters=64,
@@ -65,35 +64,30 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
-        log_info("conv4")
         flatten = tf.layers.flatten(
             inputs=conv4
         )
-        log_info("flatten")
         dense1 = tf.layers.dense(
             inputs=flatten,
             units=100,
             activation=tf.nn.relu
         )
-        log_info("dense1")
         dense2 = tf.layers.dense(
             inputs=dense1,
             units=50,
             activation=tf.nn.relu
         )
-        log_info("dense2")
         dense3 = tf.layers.dense(
             inputs=dense2,
             units=10,
             activation=tf.nn.relu
         )
-        log_info("dense3")
         #maybe add dropout
         output = tf.layers.dense(
             inputs=dense3,
             units=1
         )
-        log_info("output")
+        
         predictions = tf.reshape(output, [-1])
 
         if mode == tf.estimator.ModeKeys.PREDICT:
@@ -109,7 +103,7 @@ class Model:
                 tf.cast(labels, tf.float16), predictions)
         }
 
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
         train_op = optimizer.minimize(
             loss=loss,
             global_step=tf.train.get_global_step())

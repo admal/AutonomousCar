@@ -6,7 +6,7 @@ from PIL import Image
 
 from sklearn.model_selection import train_test_split
 
-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 33, 100, 3
+IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
 
 
 def convert_from_rgb(image):
@@ -38,7 +38,7 @@ def load_csv_data(learning_set_path, validation_set_size):
     # and our steering commands as our output data
     y = data_df['steering'].values
 
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=validation_set_size, random_state=0)
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=validation_set_size, random_state=0, shuffle=True)
 
     return (X_train, y_train), (X_valid, y_valid)
 

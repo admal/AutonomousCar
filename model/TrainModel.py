@@ -12,10 +12,10 @@ class TrainModel(Model):
             x={"x": np.asarray(x_train, dtype=np.float16)},
             y=np.asarray(y_train),
             num_epochs=10,
-            shuffle=False
+            shuffle=True
         )
         log_info("Start training")
-        self._model.train(train_input_fn, steps=5)
+        self._model.train(train_input_fn, steps=500)
         self.isTrained = True
         log_info("End training")
 
@@ -24,8 +24,8 @@ class TrainModel(Model):
             train_input_fn = tf.estimator.inputs.numpy_input_fn(
                 x={"x": np.asarray(x_val, dtype=np.float16)},
                 y=np.array(y_val, dtype=np.float16),
-                num_epochs=10,
-                shuffle=False)
+                num_epochs=1,
+                shuffle=True)
             log_info("Start evaluating")
             results = self._model.evaluate(input_fn=train_input_fn)
             log_info("Loss %s" % results["loss"])
