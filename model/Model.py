@@ -32,8 +32,6 @@ class Model:
 
 
     def build_model(self, features, labels, mode):
-        log_info("start building model")
-
         conv1 = tf.layers.conv2d(
             inputs=features["x"],
             filters=24,
@@ -41,7 +39,6 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
-        log_info("conv1")
         conv2 = tf.layers.conv2d(
             inputs=conv1,
             filters=36,
@@ -49,7 +46,6 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
-        log_info("conv2")
         conv3 = tf.layers.conv2d(
             inputs=conv2,
             filters=48,

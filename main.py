@@ -1,3 +1,4 @@
+from datetime import datetime, date, time
 from log import log_info, log_error
 from model.PredictModel import PredictModel
 from model.TrainModel import TrainModel
@@ -16,12 +17,15 @@ def main():
     log_info("START")
 
     iters = 100
+
     for i in range(0, iters):
+        iter_start_time = datetime.now()
         log_info("START ITERATION {}/{}".format(i, iters))
         model = TrainModel("/home/auser/Model")
         model.train(x, y_train)
         log_info("START: evaluation")
         model.evaluate(x_v, y_val)
+        log_info("iteration last: {} minutes".format((iter_start_time - datetime.now()).seconds / 60))
 
     log_info("FINISH")
 
