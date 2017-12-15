@@ -11,11 +11,11 @@ class TrainModel(Model):
         train_input_fn = tf.estimator.inputs.numpy_input_fn(
             x={"x": np.asarray(x_train, dtype=np.float16)},
             y=np.asarray(y_train),
-            num_epochs=10,
+            num_epochs=1,
             shuffle=True
         )
         log_info("Start training")
-        self._model.train(train_input_fn, steps=500)
+        self._model.train(train_input_fn, steps=20)
         self.isTrained = True
         log_info("End training")
 

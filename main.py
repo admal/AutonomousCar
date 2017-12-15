@@ -14,16 +14,15 @@ def main():
     x_v = load_batch(x_val, 0, len(x_val))
 
     log_info("START")
-    # model = PredictModel("C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model")
-    # model.load()
-    model = TrainModel("/home/auser/Model")
 
-    # tmp = x[28]
-    # tmpy = y_train[28]
-    # tmp_res = model.predict([x[28]])
-    model.train(x, y_train)
-    log_info("TRAINED --> START EVAULATION")
-    model.evaluate(x_v, y_val)
+    iters = 100
+    for i in range(0, iters):
+        log_info("START ITERATION {}/{}".format(i, iters))
+        model = TrainModel("/home/auser/Model")
+        model.train(x, y_train)
+        log_info("START: evaluation")
+        model.evaluate(x_v, y_val)
+
     log_info("FINISH")
 
     # log_info("Supposed: {}; Obtained: {}".format(tmpy, tmp_res[0]))
