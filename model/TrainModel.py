@@ -15,7 +15,7 @@ class TrainModel(Model):
             shuffle=True
         )
         log_info("Start training")
-        self._model.train(train_input_fn, steps=20)
+        self._model.train(train_input_fn, steps=1)
         self.isTrained = True
         log_info("End training")
 
@@ -26,7 +26,6 @@ class TrainModel(Model):
                 y=np.array(y_val, dtype=np.float16),
                 num_epochs=1,
                 shuffle=True)
-            log_info("Start evaluating")
             results = self._model.evaluate(input_fn=train_input_fn)
             log_info("Loss %s" % results["loss"])
             log_info("Root Mean Squared Error: %s" % results["rmse"])
