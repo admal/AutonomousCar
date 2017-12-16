@@ -3,14 +3,18 @@ import scipy
 import pandas as pd
 import numpy as np
 from PIL import Image
+import cv2;
 
 from sklearn.model_selection import train_test_split
 
-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
+# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 160, 320, 3
+# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
+IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 64, 256, 3
 
 
 def convert_from_rgb(image):
-    return image / 255
+    return (image / 127.5) - 1.0
+    # return image / 255
 
 
 def resize(image):
@@ -24,6 +28,13 @@ def crop(image):
 def preprocess(image):
     image = crop(image)
     image = resize(image)
+    # cvImage = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    # cv2.imshow("window", cvImage)
+    # while True:
+    #     k = cv2.waitKey(0) & 0xFF
+    #     if k == 27: break
+    # return
+    # cv2.destroyAllWindows()
     image = convert_from_rgb(image)
     return image
 
