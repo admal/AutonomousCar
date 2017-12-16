@@ -1,7 +1,8 @@
-from model.Model import Model
 import tensorflow as tf
 import numpy as np
 from log import *
+
+from model.Model import Model
 
 
 class TrainModel(Model):

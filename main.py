@@ -9,10 +9,10 @@ logging.basicConfig(filename='training.log',level=logging.DEBUG)
 
 def main():
     (x_train, y_train), (x_val, y_val) = load_csv_data(
-        "/home/auser/TrainingData", 0.1)
+        "C:/Studies/AI/driving_dataset", 0.1)
 
-    x = load_batch(x_train, 0, len(x_train))
-    x_v = load_batch(x_val, 0, len(x_val))
+    x, y = load_batch(x_train, y_train, 0, 20)
+    x_v, y_v = load_batch(x_val, y_val, 0, 10)
 
     log_info("START")
 
@@ -21,10 +21,10 @@ def main():
     for i in range(0, iters):
         iter_start_time = datetime.now()
         log_info("START ITERATION {}/{}".format(i, iters))
-        model = TrainModel("/home/auser/Model")
-        model.train(x, y_train)
+        model = TrainModel("C:/Studies/AI/Model")
+        model.train(x, y)
         log_info("START: evaluation")
-        model.evaluate(x_v, y_val)
+        model.evaluate(x_v, y_v)
         log_info("iteration last: {} minutes".format((iter_start_time - datetime.now()).seconds / 60))
 
     log_info("FINISH")
