@@ -46,8 +46,14 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
-        conv3 = tf.layers.conv2d(
+        pool1 = tf.layers.max_pooling2d(
             inputs=conv2,
+            pool_size=2,
+            strides=2,
+            padding="same"
+        )
+        conv3 = tf.layers.conv2d(
+            inputs=pool1,
             filters=48,
             kernel_size=[3,3],
             padding="same",
@@ -60,8 +66,14 @@ class Model:
             padding="same",
             activation=tf.nn.relu
         )
+        pool2 = tf.layers.max_pooling2d(
+            inputs=conv4,
+            pool_size=2,
+            strides=2,
+            padding="same"
+        )
         flatten = tf.layers.flatten(
-            inputs=conv4
+            inputs=pool2
         )
         dense1 = tf.layers.dense(
             inputs=flatten,
