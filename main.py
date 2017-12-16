@@ -15,9 +15,9 @@ MODEL_DIRECTORY="C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model
 def main():
     (x_train, y_train), (x_val, y_val) = load_csv_data(DATA_CSV_FILE, 0.1)
 
-    x = load_batch(x_train, 0, len(x_train))
+    x, y = load_batch(x_train, y_train, 0, len(x_train))
     # x = load_batch(x_train, 0, 1)
-    x_v = load_batch(x_val, 0, len(x_val))
+    x_v, y_v = load_batch(x_val, y_val, 0, len(x_val))
     # x_v = load_batch(x_val, 0, 1)
 
 
@@ -27,9 +27,9 @@ def main():
         iter_start_time = datetime.now()
         log_info("START ITERATION {}/{}".format(i+1, MAX_ITERS))
         model = TrainModel(MODEL_DIRECTORY)
-        model.train(x, y_train)
+        model.train(x, y)
         log_info("START: evaluation")
-        model.evaluate(x_v, y_val)
+        model.evaluate(x_v, y_v)
         log_info("iteration last: {0:.3g} minutes".format((datetime.now() - iter_start_time).seconds / 60))
         print("iteration ", i+1, " last: {0:.3g} minutes".format((datetime.now() - iter_start_time).seconds / 60))
 

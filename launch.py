@@ -47,36 +47,6 @@ EPOCH_COUNT = 5
 def load_nn_model(model_path):
     raise NotImplementedError("model loading should be implemented.")
 
-
-# def learn_on_single_image(input_image, steering_angle):
-#     return
-
-# def launch_training_process(training_csv_set, validation_csv_set):
-
-#     for i in range(EPOCH_COUNT):
-#         # for each epoch do the shuffle and divide into batches
-
-#         # unison shuffle
-#         assert len(training_csv_set[0]) == len(training_csv_set[1])
-#         p = np.random.permutation(len(training_csv_set[1]))
-#         shuffled_csv_set = training_csv_set[0][p], training_csv_set[1][p]
-
-#         for idx in range(0, len(training_csv_set), BATCH_SIZE):
-#             input_images_batch, steering_angles_batch = load_batch(shuffled_csv_set, idx, BATCH_SIZE)
-
-#             # here we can create more samples
-
-#             center_images_batch = [img[1] for img in input_images_batch]
-
-#             for input_image, steering_angle in zip(center_images_batch, steering_angles_batch):
-#                 learn_on_single_image(input_image, steering_angle)
-
-#         print("epoch: ", i)
-
-#     print("finished learning")
-#     return model
-
-
 @sio.on('telemetry')
 def telemetry(sid, data):
     if data:
@@ -169,7 +139,6 @@ if __name__ == '__main__':
         print("LEARNING")
         validation_set_size = 0.1  # percentage of frames devoted to validation (last frames of the recording)
         training_csv_set, validation_csv_set = load_csv_data(args.training_set, validation_set_size)
-        model = launch_training_process(training_csv_set, validation_csv_set)
 
     # load model
     if not args.training_set and args.model:
