@@ -17,7 +17,7 @@ class Model:
     image_width = IMAGE_WIDTH
     image_height = IMAGE_HEIGHT
     color_channels = IMAGE_CHANNELS
-    model_dir = "C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model"
+    model_dir = "C:\\Studies\\AI\\Model"
 
     def __init__(self, model_dir = None):
         """
@@ -26,7 +26,7 @@ class Model:
         or with checkpoints to continue training
         """
         if model_dir is None:
-            "C:\\Users\\ASUS\\Documents\\PW\\SieciNeuronowe\\Projekt2\\Model"
+            self.model_dir = "C:\\Studies\\AI\\Model"
         else:
             self.model_dir = model_dir
 
@@ -111,7 +111,7 @@ class Model:
                 tf.cast(labels, tf.float16), predictions)
         }
 
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-2)
         train_op = optimizer.minimize(
             loss=loss,
             global_step=tf.train.get_global_step())
