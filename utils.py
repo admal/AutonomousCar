@@ -3,17 +3,12 @@ import scipy
 import pandas as pd
 import numpy as np
 from PIL import Image
-
 from sklearn.model_selection import train_test_split
-
-# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 160, 320, 3
-# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 64, 256, 3
+from config import *
 
 
 def convert_from_rgb(image):
     return (image / 127.5) - 1.0
-    # return image / 255
 
 
 def resize(image):
@@ -27,13 +22,6 @@ def crop(image):
 def preprocess(image):
     image = crop(image)
     image = resize(image)
-    # cvImage = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    # cv2.imshow("window", cvImage)
-    # while True:
-    #     k = cv2.waitKey(0) & 0xFF
-    #     if k == 27: break
-    # return
-    # cv2.destroyAllWindows()
     image = convert_from_rgb(image)
     return image
 
@@ -56,6 +44,7 @@ def randomise_picture(ss_paths, steering_angle):
         steering_angle = steering_angle - 0.2
 
     return image, steering_angle
+
 
 # randomly mirror the image and the steering angle
 def random_flip(image, steering_angle):
@@ -85,7 +74,8 @@ def load_csv_data(learning_set_path, validation_set_size):
     # and our steering commands as our output data
     y = data_df['steering'].values
 
-    x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=validation_set_size, random_state=0, shuffle=True)
+    x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=validation_set_size, random_state=0,
+                                                          shuffle=True)
 
     return (x_train, y_train), (x_valid, y_valid)
 
@@ -99,8 +89,8 @@ def load_batch(ss_paths_set, steering_angles, idx, batch_size):
     steering_angles_batch = []
 
     # load images for current iteration
-    for ss_paths, steering_angle in zip(ss_paths_set[idx*batch_size:(idx+1)*batch_size],
-                                         steering_angles[idx*batch_size:(idx+1)*batch_size]):
+    for ss_paths, steering_angle in zip(ss_paths_set[idx * batch_size:(idx + 1) * batch_size],
+                                        steering_angles[idx * batch_size:(idx + 1) * batch_size]):
         image, steering_angle = augument(ss_paths, steering_angle)
         input_images_batch.append(image)
         steering_angles_batch.append(steering_angle)

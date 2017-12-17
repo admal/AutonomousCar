@@ -1,11 +1,8 @@
-
 import os
-
-from log import log_info
 
 os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
 import tensorflow as tf
-from utils import *
+from config import *
 
 tf.logging.set_verbosity(tf.logging.ERROR)
 
@@ -111,7 +108,7 @@ class Model:
                 tf.cast(labels, tf.float16), predictions)
         }
 
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=LEARNING_RATE)
         train_op = optimizer.minimize(
             loss=loss,
             global_step=tf.train.get_global_step())

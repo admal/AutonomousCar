@@ -3,6 +3,7 @@ import argparse
 import csv
 import os
 
+
 def move_images(csv_file, new_path):
     data = csv.reader(open(csv_file, newline=''))
 
