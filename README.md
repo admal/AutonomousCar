@@ -21,7 +21,12 @@ Dane generowane będą poprzez jazdę w symulatorze *Udacity*. Podczas jazdy two
 #### Testowanie nauczonego modelu
 Już nauczony model będzie testowany z użyciem symulatora *Udacity*. W tym celu potrzebne będzie stworzenie aplikacji klienckiej, która będzie komunikować się z symulatorem w celu pobierania informacji o aktualnym stanie pojazdu i wysyłania wyniku sieci do symulatora. Testowanie będzie polegac na porównywaniu czasu, przez który samochód był zdolny utrzymać się na drodze. Celem będzie osiągnięcie modelu, który na dowolnej konfiguracji toru będzie mógł swobodnie prowadzić i utrzymywać się na drodze.
 
+#### Konfiguracja udacity
+Rozdzielczość: 800x600
+Grafika: Simple
+
 #### Źródła
 * https://www.youtube.com/watch?v=EaY5QiZwSP4
 * https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/
 * https://github.com/udacity/self-driving-car-sim
+
