@@ -4,48 +4,37 @@ import argparse
 import base64
 # for frametimestamp saving
 from datetime import datetime
-# reading and writing files
-import os
 # high level file operations
 import shutil
-# matrix math
-import numpy as np
 # real-time server
 import socketio
-# concurrent networking
-import eventlet
 # web server gateway interface
 import eventlet.wsgi
-# image manipulation
-from PIL import Image
 # web framework
 from flask import Flask
 # input output
 from io import BytesIO
-
 from model.PredictModel import PredictModel
 from utils import *
+from config import *
 
 # initialize our server
 sio = socketio.Server()
 # our flask (web) app
 app = Flask(__name__)
 # init our model and image array as empty
-model = PredictModel("C:\\Studies\\AI\\Model")
+model = PredictModel(TRAINED_MODEL_DIRECTORY)
+
 model.load()
 prev_image_array = None
 
-MAX_SPEED, MIN_SPEED = 25, 10
-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
-
 # and a speed limit
 speed_limit = MAX_SPEED
-BATCH_SIZE = 20
-EPOCH_COUNT = 5
 
 
 def load_nn_model(model_path):
     raise NotImplementedError("model loading should be implemented.")
+
 
 @sio.on('telemetry')
 def telemetry(sid, data):
@@ -146,7 +135,6 @@ if __name__ == '__main__':
     if not args.training_set and args.model:
         print("LOADING MODEL")
         model = load_nn_model(args.model)
-
 
     if args.image_folder != '':
         print("Creating image folder at {}".format(args.image_folder))
