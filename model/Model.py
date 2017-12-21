@@ -29,6 +29,7 @@ class Model:
 
 
     def build_model(self, features, labels, mode):
+
         conv1 = tf.layers.conv2d(
             inputs=features["x"],
             filters=24,
@@ -92,7 +93,7 @@ class Model:
             inputs=dense3,
             units=1
         )
-        
+
         predictions = tf.reshape(output, [-1])
 
         if mode == tf.estimator.ModeKeys.PREDICT:
