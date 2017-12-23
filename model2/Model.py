@@ -27,9 +27,8 @@ class Model:
         if self._model_graph is None:
             self._model_graph = self._build_model()
             self._model = tflearn.DNN(self._model_graph,
-                                checkpoint_path=MODEL_DIRECTORY,
-                                max_checkpoints=1,
-                                tensorboard_verbose=2)
+                                tensorboard_dir=MODEL_DIRECTORY,
+                                tensorboard_verbose=3)
 
         return self._model
 

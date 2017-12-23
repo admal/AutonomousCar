@@ -2,7 +2,7 @@ import tflearn
 
 from model2.Model import Model
 
-from config import MODEL_DIRECTORY
+from config import EPOCHS_COUNT
 
 
 class TrainModel(Model):
@@ -11,7 +11,7 @@ class TrainModel(Model):
 
         model.fit( x,
                   y,
-                  n_epoch=100,
+                  n_epoch=EPOCHS_COUNT,
                   validation_set=( x_val,  y_val),
                   shuffle=True,
                   show_metric=True,
