@@ -24,6 +24,7 @@ sio = socketio.Server()
 app = Flask(__name__)
 # init our model and image array as empty
 model = PredictModel(TRAINED_MODEL_DIRECTORY)
+
 model.load()
 prev_image_array = None
 
@@ -44,6 +45,7 @@ def telemetry(sid, data):
         throttle = float(data["throttle"])
         # The current speed of the car
         speed = float(data["speed"])
+        print('received:: speed:{}'.format(speed))
         # The current image from the center camera of the car
         image = Image.open(BytesIO(base64.b64decode(data["image"])))
         try:
@@ -67,7 +69,8 @@ def telemetry(sid, data):
                 speed_limit = MAX_SPEED
             throttle = 1.0 - steering_angle ** 2 - (speed / speed_limit) ** 2
 
-            print('{} {} {}'.format(steering_angle, throttle, speed))
+            print('sending:: steering angle:{} throttle:{}'.format(steering_angle, throttle))
+            print()
             send_control(steering_angle, throttle)
         except Exception as e:
             print(e)

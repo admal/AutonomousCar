@@ -3,6 +3,7 @@ import numpy as np
 from log import *
 
 from model.Model import Model
+from config import *
 
 
 class TrainModel(Model):
@@ -12,11 +13,11 @@ class TrainModel(Model):
         train_input_fn = tf.estimator.inputs.numpy_input_fn(
             x={"x": np.asarray(x_train, dtype=np.float16)},
             y=np.asarray(y_train),
-            num_epochs=1,
+            num_epochs=None,
             shuffle=True
         )
         log_info("Start training")
-        self._model.train(train_input_fn, steps=1)
+        self._model.train(train_input_fn, steps=TRAIN_STEP_COUNT)
         self.isTrained = True
         log_info("End training")
 
