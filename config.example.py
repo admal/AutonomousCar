@@ -17,6 +17,8 @@ MODEL_DIRECTORY="/home/auser/Model"
 #directory with already trained model, used during car simulation
 TRAINED_MODEL_DIRECTORY = "/home/auser/TrainedModel"
 EPOCHS_COUNT=100
+#not used in model2
+TRAIN_STEP_COUNT=10
 
 #MISCELLANEOUS
 MAX_SPEED = 25

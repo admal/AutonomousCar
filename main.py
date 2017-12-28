@@ -1,4 +1,6 @@
 from datetime import datetime, date, time
+from pathlib import Path
+
 from log import log_info
 from model2.TrainModel import TrainModel
 from utils import *
@@ -11,13 +13,12 @@ logging.basicConfig(filename=TRAIN_LOG_FILE, level=logging.DEBUG)
 def main():
     (x_train, y_train), (x_val, y_val) = load_csv_data(DATA_CSV_FILE, 0.1)
 
-    # x, y = load_batch(x_train, y_train, 0, len(x_train))
-    # x_v, y_v = load_batch(x_val, y_val, 0, len(x_val))
-
-    x, y = load_batch(x_train, y_train, 0, len(x_train))
-    x_v, y_v = load_batch(x_val, y_val, 0, len(x_val))
-
     log_info("START")
+    model = TrainModel(MODEL_DIRECTORY + '\\trained-model')
+
+    folder = Path(MODEL_DIRECTORY + '\\NvidiaModel')
+    if folder.exists():
+        model.load()
 
     for i in range(0, MAX_ITERS):
         # load batch for each iteration, batches differ in chosen images and its mirrors resulting in different datasets
@@ -35,7 +36,6 @@ def main():
         y_v = np.reshape(y_v, [-1, 1])
         iter_start_time = datetime.now()
         log_info("START ITERATION {}/{}".format(i+1, MAX_ITERS))
-        model = TrainModel(MODEL_DIRECTORY + '\\trained-model')
         model.train(x, y, x_v, y_v)
         log_info("iteration last: {0:.3g} minutes".format((datetime.now() - iter_start_time).seconds / 60))
 
