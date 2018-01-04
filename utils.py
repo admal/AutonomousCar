@@ -57,7 +57,6 @@ def random_flip(image, steering_angle):
 # preprocess and augument dataset
 def augument(ss_paths, steering_angle):
     image, steering_angle = randomise_picture(ss_paths, steering_angle)
-    image = preprocess(image)  # apply the preprocessing    
     image, steering_angle = random_flip(image, steering_angle)
 
     # todo maybe add translate, shadow, brightness 
@@ -80,7 +79,7 @@ def load_csv_data(learning_set_path, validation_set_size):
     return (x_train, y_train), (x_valid, y_valid)
 
 
-def load_batch(ss_paths_set, steering_angles, idx, batch_size):
+def load_batch(ss_paths_set, steering_angles, idx, batch_size, augument_pictures):
     '''
     input is paths to 3 images and, steering angle
     output is selected and altered image and adjusted steering_angle
@@ -91,8 +90,19 @@ def load_batch(ss_paths_set, steering_angles, idx, batch_size):
     # load images for current iteration
     for ss_paths, steering_angle in zip(ss_paths_set[idx * batch_size:(idx + 1) * batch_size],
                                         steering_angles[idx * batch_size:(idx + 1) * batch_size]):
-        image, steering_angle = augument(ss_paths, steering_angle)
+        if augument_pictures:
+            image, steering_angle = augument(ss_paths, steering_angle)
+
+        image = preprocess(image)  # apply the preprocessing        
         input_images_batch.append(image)
         steering_angles_batch.append(steering_angle)
 
     return input_images_batch, steering_angles_batch
+
+
+def generate_batches(ss_paths, steering_angles, augument_pictures):
+    #todo unison shuffle the paths here just incase
+
+    # generator of batches used for keras model
+    for i in range(int(len(ss_paths)/BATCH_SIZE)):
+        yield load_batch(ss_paths, steering_angles, i, BATCH_SIZE, augument_pictures)
