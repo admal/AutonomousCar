@@ -26,8 +26,8 @@ def main():
             x, y = load_batch(x_train, y_train, 0, len(y_train))
             x_v, y_v = load_batch(x_val, y_val, 0, len(y_val))
         else:
-            x, y = load_batch(x_train, y_train, 0, BATCH_SIZE)
-            x_v, y_v = load_batch(x_val, y_val, 0, BATCH_SIZE)
+            x, y = load_batch(x_train, y_train, i, BATCH_SIZE)
+            x_v, y_v = load_batch(x_val, y_val, i, BATCH_SIZE)
 
         x = np.reshape(x, [-1, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
         x_v = np.reshape(x_v, [-1, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])

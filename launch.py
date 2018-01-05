@@ -23,7 +23,7 @@ sio = socketio.Server()
 # our flask (web) app
 app = Flask(__name__)
 # init our model and image array as empty
-model = PredictModel(TRAINED_MODEL_DIRECTORY)
+model = PredictModel(TRAINED_MODEL_DIRECTORY+ '\\trained-model')
 
 model.load()
 prev_image_array = None

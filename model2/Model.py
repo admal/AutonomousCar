@@ -48,10 +48,10 @@ class Model:
             activation='relu'
         )
 
-        network = max_pool_2d(
-            network,
-            2,
-            strides=2)
+        # network = max_pool_2d(
+        #     network,
+        #     2,
+        #     strides=2)
 
         network = conv_2d(
             network,
@@ -66,10 +66,10 @@ class Model:
             activation='relu'
         )
 
-        network = max_pool_2d(
-            network,
-            2,
-            strides=2)
+        # network = max_pool_2d(
+        #     network,
+        #     2,
+        #     strides=2)
 
         network= tflearn.flatten(network)
 
@@ -94,15 +94,18 @@ class Model:
         network = fully_connected(
             network,
             1,
-            activation='linear'
+            activation='linear',
+            bias=False
         )
+        network = tf.reshape(network, [-1, 1]) #so that accuracy is binary_accuracy
 
         network = regression(
             network,
             optimizer='SGD',
             learning_rate=LEARNING_RATE,
             loss='mean_square',
-            name='targets'
+            name='targets',
+            metric='accuracy'
         )
 
         return network

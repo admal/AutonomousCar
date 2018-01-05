@@ -15,8 +15,8 @@ class TrainModel(Model):
                   validation_set=( x_val,  y_val),
                   shuffle=True,
                   show_metric=True,
-                  batch_size=128,
+                  batch_size=16,
                   snapshot_step=10,
-                  snapshot_epoch=False,
+                  snapshot_epoch=True,
                   run_id='NvidiaModel')
         model.save(self.model_dir)
