@@ -45,7 +45,6 @@ def telemetry(sid, data):
         throttle = float(data["throttle"])
         # The current speed of the car
         speed = float(data["speed"])
-        print('received:: speed:{}'.format(speed))
         # The current image from the center camera of the car
         image = Image.open(BytesIO(base64.b64decode(data["image"])))
         try:
@@ -55,10 +54,11 @@ def telemetry(sid, data):
 
             # predict the steering angle for the image
             # steering_angle = float(model.predict(image, batch_size=1))
+            start_prediction = datetime.now()
             if model is not None:
                 result = model.predict(image)
                 steering_angle = result[0][0]
-
+            prediction_last = datetime.now() - start_prediction
             # lower the throttle as the speed increases
             # if the speed is above the current speed limit, we are on a downhill.
             # make sure we slow down first and then go back to the original max speed.
@@ -69,8 +69,7 @@ def telemetry(sid, data):
                 speed_limit = MAX_SPEED
             throttle = 1.0 - steering_angle ** 2 - (speed / speed_limit) ** 2
 
-            print('sending:: steering angle:{} throttle:{}'.format(steering_angle, throttle))
-            print()
+            print('predict time: {}; steering angle:{}; throttle:{}'.format(prediction_last.microseconds / 1000000, steering_angle, throttle))
             send_control(steering_angle, throttle)
         except Exception as e:
             print(e)
