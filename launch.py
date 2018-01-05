@@ -14,7 +14,7 @@ import eventlet.wsgi
 from flask import Flask
 # input output
 from io import BytesIO
-from model.PredictModel import PredictModel
+from model2.PredictModel import PredictModel
 from utils import *
 from config import *
 
@@ -23,7 +23,7 @@ sio = socketio.Server()
 # our flask (web) app
 app = Flask(__name__)
 # init our model and image array as empty
-model = PredictModel(TRAINED_MODEL_DIRECTORY)
+model = PredictModel(TRAINED_MODEL_DIRECTORY+ '\\trained-model')
 
 model.load()
 prev_image_array = None
@@ -57,7 +57,7 @@ def telemetry(sid, data):
             # steering_angle = float(model.predict(image, batch_size=1))
             if model is not None:
                 result = model.predict(image)
-                steering_angle = result[0]
+                steering_angle = result[0][0]
 
             # lower the throttle as the speed increases
             # if the speed is above the current speed limit, we are on a downhill.
