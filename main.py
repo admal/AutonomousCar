@@ -11,8 +11,6 @@ logging.basicConfig(filename=TRAIN_LOG_FILE, level=logging.DEBUG)
 
 
 def main():
-    (x_train, y_train), (x_val, y_val) = load_csv_data(DATA_CSV_FILE, 0.1)
-
     log_info("START")
     model = TrainModel(MODEL_DIRECTORY + '\\trained-model')
 
@@ -21,6 +19,7 @@ def main():
         model.load()
 
     for i in range(0, MAX_ITERS):
+        (x_train, y_train), (x_val, y_val) = load_csv_data(DATA_CSV_FILE, 0.1)
         # load batch for each iteration, batches differ in chosen images and its mirrors resulting in different datasets
         if BATCH_SIZE is None:
             x, y = load_batch(x_train, y_train, 0, len(y_train))
@@ -28,7 +27,7 @@ def main():
         else:
             x, y = load_batch(x_train, y_train, i, BATCH_SIZE)
             x_v, y_v = load_batch(x_val, y_val, i, BATCH_SIZE)
-
+        
         x = np.reshape(x, [-1, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
         x_v = np.reshape(x_v, [-1, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
 

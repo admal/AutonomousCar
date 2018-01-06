@@ -48,10 +48,10 @@ class Model:
             activation='relu'
         )
 
-        # network = max_pool_2d(
-        #     network,
-        #     2,
-        #     strides=2)
+        network = max_pool_2d(
+            network,
+            2,
+            strides=2)
 
         network = conv_2d(
             network,
@@ -66,10 +66,10 @@ class Model:
             activation='relu'
         )
 
-        # network = max_pool_2d(
-        #     network,
-        #     2,
-        #     strides=2)
+        network = max_pool_2d(
+            network,
+            2,
+            strides=2)
 
         network= tflearn.flatten(network)
 
@@ -78,17 +78,32 @@ class Model:
             100,
             activation='relu'
         )
+        
+        network = tflearn.dropout(
+            network,
+            keep_prob=0.5    
+        )
 
         network = fully_connected(
             network,
             50,
             activation='relu'
         )
+        
+        network = tflearn.dropout(
+            network,
+            keep_prob=0.5    
+        )
 
         network = fully_connected(
             network,
             10,
             activation='relu'
+        )
+        
+        network = tflearn.dropout(
+            network,
+            keep_prob=0.5    
         )
 
         network = fully_connected(
